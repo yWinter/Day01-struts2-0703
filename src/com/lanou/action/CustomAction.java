@@ -7,7 +7,7 @@ import com.opensymphony.xwork2.ActionSupport;
  */
 public class CustomAction extends ActionSupport {
 
-    // 从 ActionSupport 类继承下的动作方法
+    // 111从 ActionSupport 类继承下的动作方法
     // 当 struts.xml 中的 action 标签没有配置 method 属性时会调用的方法
 
 
