@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+        "http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+
+    <package name="day01" extends="struts-default">
+        <action name="sayHello" class="com.lanou.action.HelloAction" method="sayHello">
+            <result name="success">/success.jsp</result>
+        </action>
+    </package>
+    <!--针对用户的相关操作
+        namespace:区分访问地址
+    -->
+    <package name="user" extends="struts-default" namespace="/user">
+        <!--添加-->
+        <action name="add_user" class="com.lanou.action.UserAction" method="addUser">
+            <result name="add">/success.jsp</result>
+        </action>
+        <!--删除-->
+        <action name="delete_user" class="com.lanou.action.UserAction" method="deleteUser">
+            <result name="delete">/success.jsp</result>
+        </action>
+    </package>
+    <!--通配符-->
+    <package name="user1" extends="struts-default" namespace="/user1">
+        <!--{1}取第一个星号-->
+        <action name="*_user" class="com.lanou.action.UserAction" method="{1}User">
+            <result name="{1}">/success.jsp</result>
+            <result name="error">/error.jsp</result>
+        </action>
+    </package>
+
+    <package name="custom" extends="struts-default" namespace="/custom">
+        <!--全局的结果集针对的是某个 package-->
+        <global-results>
+            <result name="error">/error.jsp</result>
+        </global-results>
+        <!--继承了 ActionSupport 之后, method 默认执行动作类 execute 方法-->
+        <action name="custom" class="com.lanou.action.CustomAction">
+            <!--type="dispatcher"转发到一个 jsp 页面,默认情况下
+                    chain: 转发到另一个 action 动作中
+                    redirect: 重定向到一个 jsp 页面
+                    redirectAction: 重定向到一个 action 动作中 namespace 有变化
+            -->
+            <result name="success" type="redirectAction">
+                <!--正常 chain 没有 param 是相对路径 namespace=""-->
+                <!--用绝对路径 param-->
+                <param name="namespace">/user</param>
+                <param name="actionName">add_user</param>
+            </result>
+            <!--error 牛逼-->
+            <result name="error">/error.jsp</result>
+        </action>
+        <action name="custom1" class="com.lanou.action.CustomAction" method="customGlobleResult">
+
+        </action>
+    </package>
+
+</struts>
